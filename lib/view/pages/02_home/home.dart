@@ -9,8 +9,6 @@ import 'package:quiz_app_api/controllers/Course_controller.dart';
 import 'package:quiz_app_api/controllers/quiz_controller.dart';
 import 'package:quiz_app_api/layouts/main_layout.dart';
 import 'package:quiz_app_api/models/courses_model.dart';
-import 'package:quiz_app_api/models/question.dart';
-import 'package:quiz_app_api/resources/api_provider.dart';
 import 'package:quiz_app_api/resources/cache_helper.dart';
 import 'package:quiz_app_api/shared/config/app_colors.dart';
 import 'package:quiz_app_api/view/pages/01_accounts/login.dart';
@@ -36,24 +34,26 @@ class HomePage extends StatelessWidget {
           bottom: 20,
         ),
         child: GetX<CourseController>(
-          builder: (controller) => controller.isLoding.value
-              ? const Center(child: CircularProgressIndicator())
-              : ListView.builder(
-                  itemBuilder: (context, index) {
-                    return AnimationConfiguration.staggeredList(
-                      duration: const Duration(milliseconds: 500),
-                      position: index,
-                      child: SlideAnimation(
-                        horizontalOffset: 300,
-                        child: FadeInAnimation(
-                          child: _bulidCategoryItems(
-                              context, controller.courseModel!.data![index]),
+          builder: (controller) {
+            return controller.isLoding.value
+                ? const Center(child: CircularProgressIndicator())
+                : ListView.builder(
+                    itemBuilder: (context, index) {
+                      return AnimationConfiguration.staggeredList(
+                        duration: const Duration(milliseconds: 500),
+                        position: index,
+                        child: SlideAnimation(
+                          horizontalOffset: 300,
+                          child: FadeInAnimation(
+                            child: _bulidCategoryItems(
+                                context, controller.courseModel!.data![index]),
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  itemCount: controller.courseModel!.data!.length,
-                ),
+                      );
+                    },
+                    itemCount: controller.courseModel!.data!.length,
+                  );
+          },
         ),
       ),
       footer: [
@@ -83,8 +83,9 @@ class HomePage extends StatelessWidget {
             onTap: () {
               // TODO: implement is go to EXAM
               if (data.isExaminated == false) {
-                controllerExam.getExamData(data.courseId!);
-                //startQuiz();
+                // print(data.courseId!);
+                Get.find<QuizController>()
+                    .getExamData(data.courseId!, data.courseName!);
               }
             },
             child: Container(
@@ -249,17 +250,16 @@ class HomePage extends StatelessWidget {
 
   void startQuiz() async {
     try {
-      List<Question> questions = await getQuestions();
-      if (questions.isEmpty) {
-        Get.off(() => const ErrorPage(
-              message:
-                  "There are not enough questions in the category, with the options you selected.",
-            ));
-        return;
-      }
-      Get.to(() => QuizList(
-            questions: questions,
-          ));
+      // List<DataExam>? questions =
+      //     await Get.find<QuizController>().examModel!.data;
+      // if (questions!.isEmpty) {
+      //   Get.off(() => const ErrorPage(
+      //         message:
+      //             "There are not enough questions in the category, with the options you selected.",
+      //       ));
+      //   return;
+      // }
+      //Get.to(() =>  QuizList(courseName: data.courseName,));
     } on SocketException catch (_) {
       Get.off(() => const ErrorPage(
             message:
@@ -269,7 +269,7 @@ class HomePage extends StatelessWidget {
       // ignore: avoid_print
       print(e.toString());
       Get.off(() => const ErrorPage(
-            message: "Unexpected error trying to connect to the API",
+            message: "Unexpected error trying to connect to the API \n ",
           ));
     }
   }

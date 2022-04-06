@@ -13,6 +13,7 @@ class CourseController extends GetxController {
   ExamModel? examModel;
 
   RxBool isLoding = false.obs;
+  RxBool isLodingExam = false.obs;
 
   @override
   void onInit() {
@@ -42,6 +43,3 @@ class CourseController extends GetxController {
     });
   }
 }
-
-// fdf17170-8185-4c1f-a58b-303680b74e21
-//${LoginController.userModel!.data!.userDetails!.id}

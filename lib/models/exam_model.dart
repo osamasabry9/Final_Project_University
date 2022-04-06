@@ -1,4 +1,33 @@
 class ExamModel {
+  bool? status;
+  String? message;
+  List<DataExam>? data;
+
+  ExamModel({this.status, this.message, this.data});
+
+  ExamModel.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    message = json['message'];
+    if (json['data'] != null) {
+      data = <DataExam>[];
+      json['data'].forEach((v) {
+        data!.add(new DataExam.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class DataExam {
   int? id;
   String? questionx;
   String? qtype;
@@ -9,7 +38,7 @@ class ExamModel {
   String? hint;
   int? courseId;
 
-  ExamModel(
+  DataExam(
       {this.id,
       this.questionx,
       this.qtype,
@@ -20,7 +49,7 @@ class ExamModel {
       this.hint,
       this.courseId});
 
-  ExamModel.fromJson(Map<String, dynamic> json) {
+  DataExam.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     questionx = json['questionx'];
     qtype = json['qtype'];
@@ -46,3 +75,8 @@ class ExamModel {
     return data;
   }
 }
+
+
+  // static List<ExamModel> fromData(List<Map<String, dynamic>> data) {
+  //   return data.map((questionx) => ExamModel.fromJson(questionx)).toList();
+  // }

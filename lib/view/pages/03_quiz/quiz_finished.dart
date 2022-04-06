@@ -3,13 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quiz_app_api/layouts/main_layout.dart';
+import 'package:quiz_app_api/models/exam_model.dart';
 import 'package:quiz_app_api/models/question.dart';
 import 'package:quiz_app_api/view/pages/02_home/home.dart';
 import 'package:quiz_app_api/view/pages/03_quiz/check_answers.dart';
 
 // ignore: must_be_immutable
 class QuizFinishedPage extends StatelessWidget {
-  final List<Question> questions;
+  final List<DataExam> questions;
   final Map<int, dynamic> answers;
   late int correctAnswers;
 
@@ -24,11 +25,11 @@ class QuizFinishedPage extends StatelessWidget {
     //     value = '';
     //   }
     // });
-    answers.forEach((index, value) {
-      if (questions[index].correctAnswer == value) {
-        correct++;
-      }
-    });
+    // answers.forEach((index, value) {
+    //   if (questions[index].correctAnswer == value) {
+    //     correct++;
+    //   }
+    // });
     const TextStyle titleStyle = TextStyle(
         color: Colors.black87, fontSize: 16.0, fontWeight: FontWeight.w500);
     final TextStyle trailingStyle = TextStyle(
@@ -115,11 +116,11 @@ class QuizFinishedPage extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                     child: const Text("Check Answers"),
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => CheckAnswersPage(
-                                questions: questions,
-                                answers: answers,
-                              )));
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (_) => CheckAnswersPage(
+                      //           questions: questions,
+                      //           answers: answers,
+                      //         )));
                     },
                   ),
                 ],

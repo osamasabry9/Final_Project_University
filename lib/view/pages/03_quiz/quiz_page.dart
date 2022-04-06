@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:get/get.dart';
 import 'package:html_unescape/html_unescape.dart';
+import 'package:quiz_app_api/models/exam_model.dart';
 import 'package:quiz_app_api/shared/config/app_colors.dart';
 import 'package:quiz_app_api/layouts/main_layout.dart';
 import 'package:quiz_app_api/models/question.dart';
@@ -9,7 +10,7 @@ import 'package:quiz_app_api/view/pages/03_quiz/quiz_list.dart';
 import 'package:quiz_app_api/view/widgets/main_button.dart';
 
 class QuizPage extends StatefulWidget {
-  final Question question;
+  final DataExam question;
   final int indexQuestion;
 
   const QuizPage({
@@ -36,18 +37,24 @@ class _QuizPageState extends State<QuizPage> {
   @override
   void initState() {
     super.initState();
-   // disableCapture();
+    // disableCapture();
     _currentIndex = widget.indexQuestion;
   }
 
   @override
   Widget build(BuildContext context) {
-    Question question = widget.question;
-    final List<dynamic> options = question.incorrectAnswers;
-    if (!options.contains(question.correctAnswer)) {
-      options.add(question.correctAnswer);
-      options.shuffle();
+    DataExam question = widget.question;
+    final List<dynamic> options = [];
+    if (question.qtype == 'M') {
+      options.add(question.a);
+      options.add(question.b);
+      options.add(question.b);
+      options.add(question.c);
     }
+    // if (!options.contains(question.correctAnswer)) {
+    //   options.add(question.correctAnswer);
+    //   options.shuffle();
+    // }
 
     return WillPopScope(
       onWillPop: () async {
@@ -76,7 +83,7 @@ class _QuizPageState extends State<QuizPage> {
                       const SizedBox(width: 16.0),
                       Expanded(
                         child: Text(
-                          HtmlUnescape().convert(question.question),
+                          HtmlUnescape().convert(question.questionx!),
                           softWrap: true,
                           style: _questionStyle,
                         ),
@@ -88,18 +95,18 @@ class _QuizPageState extends State<QuizPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        ...question.incorrectAnswers.map(
-                          (option) => RadioListTile<String>(
-                            title: Text(HtmlUnescape().convert("$option")),
-                            groupValue: QuizList.answers[_currentIndex],
-                            value: option,
-                            onChanged: (value) {
-                              setState(() {
-                                QuizList.answers[_currentIndex!] = option;
-                              });
-                            },
-                          ),
-                        ),
+                        // ...question.incorrectAnswers.map(
+                        //   (option) => RadioListTile<String>(
+                        //     title: Text(HtmlUnescape().convert("$option")),
+                        //     groupValue: QuizList.answers[_currentIndex],
+                        //     value: option,
+                        //     onChanged: (value) {
+                        //       setState(() {
+                        //         QuizList.answers[_currentIndex!] = option;
+                        //       });
+                        //     },
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

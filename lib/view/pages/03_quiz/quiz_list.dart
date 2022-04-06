@@ -7,18 +7,17 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app_api/controllers/quiz_controller.dart';
 import 'package:quiz_app_api/layouts/main_layout.dart';
-import 'package:quiz_app_api/models/question.dart';
+import 'package:quiz_app_api/models/exam_model.dart';
 import 'package:quiz_app_api/shared/config/app_colors.dart';
 import 'package:quiz_app_api/view/pages/03_quiz/quiz_finished.dart';
-import 'package:quiz_app_api/view/pages/03_quiz/quiz_page.dart';
 import 'package:quiz_app_api/view/widgets/main_button.dart';
 
 class QuizList extends StatefulWidget {
-  final List<Question> questions;
+  final String? courseName;
   static Map<int, dynamic> answers = {};
   const QuizList({
     Key? key,
-    required this.questions,
+    required this.courseName,
   }) : super(key: key);
 
   @override
@@ -26,22 +25,31 @@ class QuizList extends StatefulWidget {
 }
 
 class _QuizListState extends State<QuizList> {
-  final controller = Get.find<QuizController>();
+  //final controller = Get.find<QuizController>();
+  List<DataExam>? questions;
 
   @override
   void initState() {
+    questions = Get.find<QuizController>().examModel!.data!;
     super.initState();
     Timer(const Duration(seconds: 5000), () {
-      Get.off(() => QuizFinishedPage(
-          questions: widget.questions, answers: QuizList.answers));
+      Get.off(() =>
+          QuizFinishedPage(questions: questions!, answers: QuizList.answers));
     });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    questions!.clear();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return MainLayout(
       showBack: false,
-      title: "widget.category.name",
+      title: widget.courseName!,
       body: Padding(
         padding: const EdgeInsets.only(
           top: 20,
@@ -55,29 +63,29 @@ class _QuizListState extends State<QuizList> {
               child: SlideAnimation(
                 horizontalOffset: 300,
                 child: FadeInAnimation(
-                  child: _bulidQuestionsItems(
-                      context, index, widget.questions[index]),
+                  child:
+                      _bulidQuestionsItems(context, index, questions![index]),
                 ),
               ),
             );
           },
-          itemCount: widget.questions.length,
+          itemCount: questions!.length,
         ),
       ),
       footer: [submitAnswers()],
     );
   }
 
-  MainButton submitAnswers() {
+  Widget submitAnswers() {
     return MainButton(
       title: " Submit",
-      onTap: () => Get.off(() => QuizFinishedPage(
-          questions: widget.questions, answers: QuizList.answers)),
+      onTap: () => Get.off(() =>
+          QuizFinishedPage(questions: questions!, answers: QuizList.answers)),
     );
   }
 
   Widget _bulidQuestionsItems(
-      BuildContext context, int index, Question question) {
+      BuildContext context, int index, DataExam question) {
     var size = MediaQuery.of(context).size;
     return Container(
       padding: EdgeInsets.symmetric(
@@ -91,7 +99,7 @@ class _QuizListState extends State<QuizList> {
       margin: const EdgeInsets.only(bottom: 5),
       child: GestureDetector(
         onTap: () {
-          Get.to(() => QuizPage(question: question, indexQuestion: index));
+          //Get.to(() => QuizPage(question: question, indexQuestion: index));
         },
         child: Container(
           padding: const EdgeInsets.all(12),
@@ -120,10 +128,14 @@ class _QuizListState extends State<QuizList> {
                             width: 15,
                           ),
                           Text(
-                            question.type.toString(),
-                            style: GoogleFonts.lato(
+                            question.qtype == 'W'
+                                ? 'written'
+                                : question.qtype == 'T'
+                                    ? 'True & False'
+                                    : 'Multichoice',
+                            style: GoogleFonts.cousine(
                               textStyle: const TextStyle(
-                                fontSize: 16,
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
@@ -135,33 +147,13 @@ class _QuizListState extends State<QuizList> {
                         height: 15,
                       ),
                       AutoSizeText(
-                        question.question,
+                        question.questionx!,
                         minFontSize: 10.0,
-                        textAlign: TextAlign.center,
-                        maxLines: 3,
+                        textAlign: TextAlign.start,
+                        maxLines: 7,
                         wrapWords: false,
                       ),
                     ],
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                height: 60,
-                width: 1,
-                color: Colors.grey[200]!.withOpacity(0.7),
-              ),
-              RotatedBox(
-                quarterTurns: 3,
-                child: Text(
-                  // task.isCompleted == 0 ? 'ToDo' :
-                  'ToDo',
-                  style: GoogleFonts.lato(
-                    textStyle: const TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
                   ),
                 ),
               ),
@@ -190,7 +182,7 @@ class _QuizListState extends State<QuizList> {
   //     () {
   //       if (controller.isEnd) {
   //         Get.offAll(() => QuizFinishedPage(
-  //             questions: widget.questions, answers: QuizList.answers));
+  //             questions: questions!, answers: QuizList.answers));
   //       }
   //       return SizedBox(
   //         height: 50,
