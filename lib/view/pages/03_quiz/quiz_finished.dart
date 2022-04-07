@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quiz_app_api/layouts/main_layout.dart';
 import 'package:quiz_app_api/models/exam_model.dart';
-import 'package:quiz_app_api/models/question.dart';
 import 'package:quiz_app_api/view/pages/02_home/home.dart';
-import 'package:quiz_app_api/view/pages/03_quiz/check_answers.dart';
 
 // ignore: must_be_immutable
 class QuizFinishedPage extends StatelessWidget {

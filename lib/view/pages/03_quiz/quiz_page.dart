@@ -5,7 +5,6 @@ import 'package:html_unescape/html_unescape.dart';
 import 'package:quiz_app_api/models/exam_model.dart';
 import 'package:quiz_app_api/shared/config/app_colors.dart';
 import 'package:quiz_app_api/layouts/main_layout.dart';
-import 'package:quiz_app_api/models/question.dart';
 import 'package:quiz_app_api/view/pages/03_quiz/quiz_list.dart';
 import 'package:quiz_app_api/view/widgets/main_button.dart';
 
@@ -94,7 +93,7 @@ class _QuizPageState extends State<QuizPage> {
                   Card(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
+                      children: const <Widget>[
                         // ...question.incorrectAnswers.map(
                         //   (option) => RadioListTile<String>(
                         //     title: Text(HtmlUnescape().convert("$option")),

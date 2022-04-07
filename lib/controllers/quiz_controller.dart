@@ -13,13 +13,7 @@ class QuizController extends GetxController {
   // List<ExamModel> examData = [];
   RxBool isLoding = false.obs;
 
-  // @override
-  // void onInit() {
-  //   // TODO: implement onInit
-  //   //getExamData(4);
-  //   super.onInit();
-  // }
-
+ 
   void getExamData(int courseId, String courseName) async {
     isLoding.value = true;
     DioHelper.getData(

@@ -1,6 +1,7 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quiz_app_api/models/user_model.dart';
 
 // void signOut (context) {
 //   CacheHelper.removeData('token').then((value){

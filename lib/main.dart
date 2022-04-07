@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:get/get.dart';
-import 'package:quiz_app_api/controllers/Course_controller.dart';
 import 'package:quiz_app_api/resources/cache_helper.dart';
 import 'package:quiz_app_api/resources/dio_helper.dart';
 import 'package:quiz_app_api/shared/config/app_colors.dart';

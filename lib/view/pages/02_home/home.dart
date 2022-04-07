@@ -12,7 +12,6 @@ import 'package:quiz_app_api/models/courses_model.dart';
 import 'package:quiz_app_api/resources/cache_helper.dart';
 import 'package:quiz_app_api/shared/config/app_colors.dart';
 import 'package:quiz_app_api/view/pages/01_accounts/login.dart';
-import 'package:quiz_app_api/view/pages/03_quiz/quiz_list.dart';
 import 'package:quiz_app_api/view/pages/04_additions/error.dart';
 
 import '../../../shared/config/app_styles.dart';
@@ -81,6 +80,7 @@ class HomePage extends StatelessWidget {
           var myTime = DateFormat('HH:mm').format(time);
           return GestureDetector(
             onTap: () {
+              // ignore: todo
               // TODO: implement is go to EXAM
               if (data.isExaminated == false) {
                 // print(data.courseId!);

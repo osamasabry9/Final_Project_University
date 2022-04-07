@@ -40,7 +40,6 @@ class _QuizListState extends State<QuizList> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     questions!.clear();
     super.dispose();
   }
