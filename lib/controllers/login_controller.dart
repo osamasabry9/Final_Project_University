@@ -70,12 +70,14 @@ class LoginController extends GetxController {
     if (email.isEmpty) {
       return 'Email Address must be filled';
     }
+    return null;
   }
 
   String? validatePassword(String password) {
     if (password.isEmpty) {
-      return 'Email Address must be filled';
+      return 'Password must be filled';
     }
+    return null;
   }
 
   @override

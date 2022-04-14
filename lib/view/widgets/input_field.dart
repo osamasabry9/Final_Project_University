@@ -8,6 +8,7 @@ import '../../view/widgets/input_field_label.dart';
 class InputField extends StatelessWidget {
   final String label;
   final String hint;
+  final int maxLine;
   final TextInputType inputType;
   final IconData? prefix;
   final bool isPassword;
@@ -21,6 +22,7 @@ class InputField extends StatelessWidget {
     required this.textController,
     required this.label,
     this.hint = "",
+    this.maxLine = 1,
     this.inputType = TextInputType.text,
     this.prefix,
     this.isPassword = false,
@@ -47,6 +49,7 @@ class InputField extends StatelessWidget {
               keyboardType: inputType,
               obscureText: isPassword,
               validator: validate,
+              maxLines: maxLine,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -65,7 +68,12 @@ class InputField extends StatelessWidget {
                   size: 15,
                 ),
                 suffixIcon: suffix != null
-                    ? IconButton(onPressed: suffixPressed, icon: Icon(suffix , size: 15,))
+                    ? IconButton(
+                        onPressed: suffixPressed,
+                        icon: Icon(
+                          suffix,
+                          size: 15,
+                        ))
                     : null,
               ),
             ),

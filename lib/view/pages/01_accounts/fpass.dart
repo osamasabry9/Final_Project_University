@@ -54,6 +54,7 @@ class ForgetPassword extends StatelessWidget {
                     if (value!.isEmpty) {
                       return 'Email Address must be filled';
                     }
+                    return null;
                   },
                 ),
               ],

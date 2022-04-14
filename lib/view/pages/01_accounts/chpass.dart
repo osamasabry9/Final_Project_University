@@ -54,6 +54,7 @@ class CreatePassword extends StatelessWidget {
                     //     !LoginCubit.get(context).showPassword ? true : false,
                     validate: (value) {
                       if (value!.isEmpty) return 'Password must be filled';
+                      return null;
                     },
                   ),
                   const SizedBox(height: 25),
@@ -68,6 +69,7 @@ class CreatePassword extends StatelessWidget {
                     //     !LoginCubit.get(context).showPassword ? true : false,
                     validate: (value) {
                       if (value!.isEmpty) return 'Password must be filled';
+                      return null;
                     },
                   ),
                 ],

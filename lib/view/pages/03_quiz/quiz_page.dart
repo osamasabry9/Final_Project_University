@@ -6,12 +6,12 @@ import 'package:quiz_app_api/models/exam_model.dart';
 import 'package:quiz_app_api/shared/config/app_colors.dart';
 import 'package:quiz_app_api/layouts/main_layout.dart';
 import 'package:quiz_app_api/view/pages/03_quiz/quiz_list.dart';
+import 'package:quiz_app_api/view/widgets/input_field.dart';
 import 'package:quiz_app_api/view/widgets/main_button.dart';
 
 class QuizPage extends StatefulWidget {
   final DataExam question;
   final int indexQuestion;
-
   const QuizPage({
     Key? key,
     required this.question,
@@ -29,7 +29,8 @@ class _QuizPageState extends State<QuizPage> {
     color: AppColors.kBlackColor,
   );
 
-  int? _currentIndex;
+  //int? _currentIndex;
+  int? _indexQuestion;
 
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
@@ -37,23 +38,13 @@ class _QuizPageState extends State<QuizPage> {
   void initState() {
     super.initState();
     // disableCapture();
-    _currentIndex = widget.indexQuestion;
+    //_currentIndex = widget.question.id;
+    _indexQuestion = widget.indexQuestion;
   }
 
   @override
   Widget build(BuildContext context) {
     DataExam question = widget.question;
-    final List<dynamic> options = [];
-    if (question.qtype == 'M') {
-      options.add(question.a);
-      options.add(question.b);
-      options.add(question.b);
-      options.add(question.c);
-    }
-    // if (!options.contains(question.correctAnswer)) {
-    //   options.add(question.correctAnswer);
-    //   options.shuffle();
-    // }
 
     return WillPopScope(
       onWillPop: () async {
@@ -63,56 +54,40 @@ class _QuizPageState extends State<QuizPage> {
       },
       child: MainLayout(
         scaffoldKey: _key,
-        body: Stack(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundColor: AppColors.MAIN.withOpacity(0.5),
-                        child: Text(
-                          "${_currentIndex! + 1}",
-                          style: _questionStyle,
+        body: SingleChildScrollView(
+          child: Stack(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        CircleAvatar(
+                          backgroundColor: AppColors.MAIN.withOpacity(0.5),
+                          child: Text(
+                            "${_indexQuestion! + 1}",
+                            style: _questionStyle,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 16.0),
-                      Expanded(
-                        child: Text(
-                          HtmlUnescape().convert(question.questionx!),
-                          softWrap: true,
-                          style: _questionStyle,
+                        const SizedBox(width: 16.0),
+                        Expanded(
+                          child: Text(
+                            HtmlUnescape().convert(question.questionx!),
+                            softWrap: true,
+                            style: _questionStyle,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 50.0),
-                  Card(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: const <Widget>[
-                        // ...question.incorrectAnswers.map(
-                        //   (option) => RadioListTile<String>(
-                        //     title: Text(HtmlUnescape().convert("$option")),
-                        //     groupValue: QuizList.answers[_currentIndex],
-                        //     value: option,
-                        //     onChanged: (value) {
-                        //       setState(() {
-                        //         QuizList.answers[_currentIndex!] = option;
-                        //       });
-                        //     },
-                        //   ),
-                        // ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            )
-          ],
+                    const SizedBox(height: 50.0),
+                    listMultichoice(question),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
         footer: [
           MainButton(
@@ -124,8 +99,122 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
+  Widget listMultichoice(DataExam question) {
+    var a = 'a';
+    var b = 'b';
+    var c = 'c';
+    var d = 'd';
+    TextEditingController textAnswerController = TextEditingController();
+    return Card(
+      child: question.qtype == 'M' || question.qtype == 'Y'
+          ? Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                RadioListTile<String>(
+                  title: Text(HtmlUnescape().convert('A :  ${question.a}')),
+                  value: a,
+                  groupValue: QuizList.answersList![_indexQuestion!].answer,
+                  onChanged: (_) {
+                    setState(() {
+                      QuizList.answersList![_indexQuestion!].answer = a;
+                      QuizList.answersList![_indexQuestion!].id = question.id;
+                      QuizList.answersList![_indexQuestion!].qtype =
+                          question.qtype;
+                    });
+                  },
+                ),
+                RadioListTile<String>(
+                  title: Text(HtmlUnescape().convert('B :  ${question.b}')),
+                  value: b,
+                  groupValue: QuizList.answersList![_indexQuestion!].answer,
+                  onChanged: (_) {
+                    setState(() {
+                      QuizList.answersList![_indexQuestion!].answer = b;
+                      QuizList.answersList![_indexQuestion!].id = question.id;
+                      QuizList.answersList![_indexQuestion!].qtype =
+                          question.qtype;
+                      ;
+                    });
+                  },
+                ),
+                RadioListTile<String>(
+                  title: Text(HtmlUnescape().convert('C :  ${question.c}')),
+                  value: c,
+                  groupValue: QuizList.answersList![_indexQuestion!].answer,
+                  onChanged: (_) {
+                    setState(() {
+                      QuizList.answersList![_indexQuestion!].answer = c;
+                      QuizList.answersList![_indexQuestion!].id = question.id;
+                      QuizList.answersList![_indexQuestion!].qtype =
+                          question.qtype;
+                    });
+                  },
+                ),
+                RadioListTile<String>(
+                  title: Text(HtmlUnescape().convert('D :  ${question.d}')),
+                  value: d,
+                  groupValue: QuizList.answersList![_indexQuestion!].answer,
+                  onChanged: (_) {
+                    setState(() {
+                      QuizList.answersList![_indexQuestion!].answer = d;
+                      QuizList.answersList![_indexQuestion!].id = question.id;
+                      QuizList.answersList![_indexQuestion!].qtype =
+                          question.qtype;
+                      ;
+                    });
+                  },
+                ),
+              ],
+            )
+          : question.qtype == 'T'
+              ? Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    RadioListTile<String>(
+                      title: Text(HtmlUnescape().convert('A :  ${question.a}')),
+                      value: a,
+                      groupValue: QuizList.answersList![_indexQuestion!].answer,
+                      onChanged: (_) {
+                        setState(() {
+                          QuizList.answersList![_indexQuestion!].answer = a;
+                          QuizList.answersList![_indexQuestion!].id =
+                              question.id;
+                          QuizList.answersList![_indexQuestion!].qtype =
+                              question.qtype;
+                        });
+                      },
+                    ),
+                    RadioListTile<String>(
+                      title: Text(HtmlUnescape().convert('B :  ${question.b}')),
+                      value: b,
+                      groupValue: QuizList.answersList![_indexQuestion!].answer,
+                      onChanged: (_) {
+                        setState(() {
+                          QuizList.answersList![_indexQuestion!].answer = b;
+                          QuizList.answersList![_indexQuestion!].id =
+                              question.id;
+                          QuizList.answersList![_indexQuestion!].qtype =
+                              question.qtype;
+                        });
+                      },
+                    ),
+                  ],
+                )
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    InputField(
+                      label: 'Enter your answer',
+                      textController: textAnswerController,
+                      validate: (String? text) {},
+                    ),
+                  ],
+                ),
+    );
+  }
+
   void _nextSubmit() {
-    if (QuizList.answers[_currentIndex] == null) {
+    if (QuizList.answersList![_indexQuestion!].answer == null) {
       // ignore: deprecated_member_use
       _key.currentState!.showSnackBar(const SnackBar(
         content: Text("You must select an answer to continue."),
@@ -133,7 +222,7 @@ class _QuizPageState extends State<QuizPage> {
       return;
     } else {
       // ignore: avoid_print
-      print('${QuizList.answers}');
+      print('${QuizList.answersList![_indexQuestion!].answer} , ${QuizList.answersList![_indexQuestion!].id}');
       Get.back();
     }
   }

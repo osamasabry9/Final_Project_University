@@ -4,15 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quiz_app_api/layouts/main_layout.dart';
 import 'package:quiz_app_api/models/exam_model.dart';
+import 'package:quiz_app_api/models/post_examination.dart';
 import 'package:quiz_app_api/view/pages/02_home/home.dart';
 
 // ignore: must_be_immutable
 class QuizFinishedPage extends StatelessWidget {
   final List<DataExam> questions;
-  final Map<int, dynamic> answers;
+  static AddAnswers? answers ;
   late int correctAnswers;
 
-  QuizFinishedPage({Key? key, required this.questions, required this.answers})
+  QuizFinishedPage({Key? key, required this.questions})
       : super(key: key);
 
   @override

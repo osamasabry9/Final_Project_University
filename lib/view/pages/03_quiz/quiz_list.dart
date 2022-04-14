@@ -8,13 +8,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app_api/controllers/quiz_controller.dart';
 import 'package:quiz_app_api/layouts/main_layout.dart';
 import 'package:quiz_app_api/models/exam_model.dart';
+import 'package:quiz_app_api/models/post_examination.dart';
 import 'package:quiz_app_api/shared/config/app_colors.dart';
 import 'package:quiz_app_api/view/pages/03_quiz/quiz_finished.dart';
+import 'package:quiz_app_api/view/pages/03_quiz/quiz_page.dart';
 import 'package:quiz_app_api/view/widgets/main_button.dart';
 
 class QuizList extends StatefulWidget {
   final String? courseName;
-  static Map<int, dynamic> answers = {};
+  static AddAnswers? answers;
+  static List<Answers>? answersList = [];
   const QuizList({
     Key? key,
     required this.courseName,
@@ -32,9 +35,8 @@ class _QuizListState extends State<QuizList> {
   void initState() {
     questions = Get.find<QuizController>().examModel!.data!;
     super.initState();
-    Timer(const Duration(seconds: 5000), () {
-      Get.off(() =>
-          QuizFinishedPage(questions: questions!, answers: QuizList.answers));
+    Timer(const Duration(seconds: 10000000), () {
+      Get.off(() => QuizFinishedPage(questions: questions!));
     });
   }
 
@@ -78,8 +80,9 @@ class _QuizListState extends State<QuizList> {
   Widget submitAnswers() {
     return MainButton(
       title: " Submit",
-      onTap: () => Get.off(() =>
-          QuizFinishedPage(questions: questions!, answers: QuizList.answers)),
+      onTap: () => Get.off(() => QuizFinishedPage(
+            questions: questions!,
+          )),
     );
   }
 
@@ -98,7 +101,18 @@ class _QuizListState extends State<QuizList> {
       margin: const EdgeInsets.only(bottom: 5),
       child: GestureDetector(
         onTap: () {
-          //Get.to(() => QuizPage(question: question, indexQuestion: index));
+          if (QuizList.answersList!.contains(question.id)) {
+            Get.to(() => QuizPage(
+                  question: question,
+                  indexQuestion: index,
+                ));
+          } else {
+            QuizList.answersList!.insertAll(index,[Answers(id :0,answer:'string',qtype:'string')]);
+             Get.to(() => QuizPage(
+                  question: question,
+                  indexQuestion: index,
+                ));
+          }
         },
         child: Container(
           padding: const EdgeInsets.all(12),
@@ -170,45 +184,9 @@ class _QuizListState extends State<QuizList> {
       case 1:
         return AppColors.kRedColor;
       case 2:
-        return AppColors.kGrayColor;
+        return AppColors.kSecondaryColor;
       default:
         return AppColors.kGrayColor;
     }
   }
-
-  // Widget progressTimer(BuildContext context) {
-  //   return Obx(
-  //     () {
-  //       if (controller.isEnd) {
-  //         Get.offAll(() => QuizFinishedPage(
-  //             questions: questions!, answers: QuizList.answers));
-  //       }
-  //       return SizedBox(
-  //         height: 50,
-  //         width: 50,
-  //         child: Stack(
-  //           alignment: Alignment.center,
-  //           fit: StackFit.expand,
-  //           children: [
-  //             CircularProgressIndicator(
-  //               value: 1 - (controller.sec.value / 15),
-  //               color: AppColors.MAIN,
-  //               backgroundColor: Colors.grey,
-  //               strokeWidth: 8,
-  //             ),
-  //             Center(
-  //               child: Text(
-  //                 '${controller.sec.value}',
-  //                 style: Theme.of(context)
-  //                     .textTheme
-  //                     .headline6!
-  //                     .copyWith(color: AppColors.MAIN),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
 }
