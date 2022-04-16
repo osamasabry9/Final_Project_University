@@ -133,7 +133,6 @@ class _QuizPageState extends State<QuizPage> {
                       QuizList.answersList![_indexQuestion!].id = question.id;
                       QuizList.answersList![_indexQuestion!].qtype =
                           question.qtype;
-                      ;
                     });
                   },
                 ),
@@ -160,7 +159,6 @@ class _QuizPageState extends State<QuizPage> {
                       QuizList.answersList![_indexQuestion!].id = question.id;
                       QuizList.answersList![_indexQuestion!].qtype =
                           question.qtype;
-                      ;
                     });
                   },
                 ),
@@ -222,7 +220,8 @@ class _QuizPageState extends State<QuizPage> {
       return;
     } else {
       // ignore: avoid_print
-      print('${QuizList.answersList![_indexQuestion!].answer} , ${QuizList.answersList![_indexQuestion!].id}');
+      print(
+          '${QuizList.answersList![_indexQuestion!].answer} , ${QuizList.answersList![_indexQuestion!].id} , ${QuizList.answersList![_indexQuestion!].qtype},');
       Get.back();
     }
   }

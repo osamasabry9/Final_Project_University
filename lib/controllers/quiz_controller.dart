@@ -10,6 +10,7 @@ import 'package:quiz_app_api/view/pages/03_quiz/quiz_list.dart';
 
 class QuizController extends GetxController {
   ExamModel? examModel;
+
   // List<ExamModel> examData = [];
   RxBool isLoding = false.obs;
 
@@ -36,6 +37,7 @@ class QuizController extends GetxController {
       if (examModel!.data != null) {
         Get.to(() => QuizList(
               courseName: courseName,
+              courseId: courseId,
             ));
       }
     }).catchError((error) {
@@ -50,8 +52,5 @@ class QuizController extends GetxController {
     update();
   }
 
-  // List<ExamModel> parseExam(responseBody) {
-  //   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-  //   return parsed.map<ExamModel>((json) => ExamModel.fromJson(json)).toList();
-  // }
+  
 }

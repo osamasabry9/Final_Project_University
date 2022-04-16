@@ -29,7 +29,7 @@ class LoginController extends GetxController {
     required String password,
   }) {
     isLoding(true);
-    DioHelper.postData(url: LOGIN, token: token, data: {
+    DioHelper.postData(url: LOGIN,  data: {
       'username': email,
       'password': password,
     }).then((value) {
@@ -41,7 +41,7 @@ class LoginController extends GetxController {
             backgroundColor: AppColors.kGreenColor);
         CacheHelper.saveData(
                 key: 'std_id', value: userModel!.data?.userDetails!.id)
-            .then((value) => std_id = userModel!.data?.token);
+            .then((value) => std_id = userModel!.data?.userDetails!.id);
         CacheHelper.saveData(key: 'token', value: userModel!.data?.token)
             .then((value) {
           token = userModel!.data?.token;

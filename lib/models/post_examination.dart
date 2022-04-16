@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_new, unnecessary_this, prefer_collection_literals
+
 class AddAnswers {
   String? stdId;
   int? courseId;
@@ -47,4 +49,5 @@ class Answers {
     data['qtype'] = this.qtype;
     return data;
   }
+
 }

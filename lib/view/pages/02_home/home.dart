@@ -80,19 +80,22 @@ class HomePage extends StatelessWidget {
           var myTime = DateFormat('HH:mm').format(time);
           return GestureDetector(
             onTap: () {
-              // ignore: todo
-              // TODO: implement is go to EXAM
-              if (data.isExaminated == false) {
-                // print(data.courseId!);
-                Get.find<QuizController>()
-                    .getExamData(data.courseId!, data.courseName!);
-              }
+              //TODO: implement is go to EXAM
+              //if (data.isExaminated == false) {
+              // print(data.courseId!);
+              Get.find<QuizController>()
+                  .getExamData(data.courseId!, data.courseName!);
+              //}
             },
             child: Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                color: data.isExaminated == false ? _getBGClr(0) : _getBGClr(1),
+                color: data.isExaminated == false
+                    ? _getBGClr(2)
+                    : data.currentMarks! > 50
+                        ? _getBGClr(0)
+                        : _getBGClr(1),
               ),
               child: Row(
                 children: [
@@ -249,18 +252,7 @@ class HomePage extends StatelessWidget {
   }
 
   void startQuiz() async {
-    try {
-      // List<DataExam>? questions =
-      //     await Get.find<QuizController>().examModel!.data;
-      // if (questions!.isEmpty) {
-      //   Get.off(() => const ErrorPage(
-      //         message:
-      //             "There are not enough questions in the category, with the options you selected.",
-      //       ));
-      //   return;
-      // }
-      //Get.to(() =>  QuizList(courseName: data.courseName,));
-    } on SocketException catch (_) {
+    try {} on SocketException catch (_) {
       Get.off(() => const ErrorPage(
             message:
                 "Can't reach the servers, \n Please check your internet connection.",
@@ -281,7 +273,7 @@ class HomePage extends StatelessWidget {
       case 1:
         return AppColors.kRedColor.withOpacity(0.5);
       case 2:
-        return AppColors.kGrayColor;
+        return AppColors.kSecondaryColor.withOpacity(0.5);
       default:
         return AppColors.kGrayColor;
     }
@@ -293,6 +285,9 @@ class HomePage extends StatelessWidget {
           style: AppStyles.paragraph1.copyWith(color: AppColors.MAIN)),
       onTap: () {
         CacheHelper.removeData('token').then((value) {
+          if (value) Get.offAll(() => const LoginScreen());
+        });
+        CacheHelper.removeData('std_id').then((value) {
           if (value) Get.offAll(() => const LoginScreen());
         });
       },
