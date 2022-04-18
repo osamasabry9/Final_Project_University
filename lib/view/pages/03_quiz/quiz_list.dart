@@ -91,7 +91,8 @@ class _QuizListState extends State<QuizList> {
     return MainButton(
       title: " Submit",
       onTap: () async {
-        answerController.postExamData(widget.courseId!, questions!.length ,QuizList.answersMap);
+        answerController.postExamData(
+            widget.courseId!, questions!.length, QuizList.answersMap);
       },
     );
   }
@@ -158,7 +159,9 @@ class _QuizListState extends State<QuizList> {
                                 ? 'written'
                                 : question.qtype == 'T'
                                     ? 'True & False'
-                                    : 'Multichoice',
+                                    : question.qtype == 'Y'
+                                        ? 'One Choice'
+                                        : 'Multichoice',
                             style: GoogleFonts.cousine(
                               textStyle: const TextStyle(
                                 fontSize: 18,

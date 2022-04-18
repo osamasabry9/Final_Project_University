@@ -104,9 +104,10 @@ class _QuizPageState extends State<QuizPage> {
     var b = 'b';
     var c = 'c';
     var d = 'd';
+
     TextEditingController textAnswerController = TextEditingController();
     return Card(
-      child: question.qtype == 'M' || question.qtype == 'Y'
+      child: question.qtype == 'Y'
           ? Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -116,24 +117,54 @@ class _QuizPageState extends State<QuizPage> {
                 _radioList(question, d, question.d),
               ],
             )
-          : question.qtype == 'T'
+          : question.qtype == 'M'
               ? Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    _radioList(question, a, question.a),
-                    _radioList(question, b, question.b),
+                    _checkboxList(
+                        question,
+                        a,
+                        question.a,
+                        QuizList.answersMap[_indexQuestion!]!.answer!
+                            .split(',')),
+                    _checkboxList(
+                        question,
+                        b,
+                        question.b,
+                        QuizList.answersMap[_indexQuestion!]!.answer!
+                            .split(',')),
+                    _checkboxList(
+                        question,
+                        c,
+                        question.c,
+                        QuizList.answersMap[_indexQuestion!]!.answer!
+                            .split(',')),
+                    _checkboxList(
+                        question,
+                        d,
+                        question.d,
+                        QuizList.answersMap[_indexQuestion!]!.answer!
+                            .split(',')),
                   ],
                 )
-              : Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    InputField(
-                      label: 'Enter your answer',
-                      textController: textAnswerController,
-                      validate: (String? text) {},
+              : question.qtype == 'T'
+                  ? Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        _radioList(question, a, question.a),
+                        _radioList(question, b, question.b),
+                      ],
+                    )
+                  : Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        InputField(
+                          label: 'Enter your answer',
+                          textController: textAnswerController,
+                          validate: (String? text) {},
+                        ),
+                      ],
                     ),
-                  ],
-                ),
     );
   }
 
@@ -151,6 +182,35 @@ class _QuizPageState extends State<QuizPage> {
           QuizList.answersMap[_indexQuestion!]!.qtype = question.qtype;
         });
       },
+    );
+  }
+
+  CheckboxListTile _checkboxList(
+    DataExam question,
+    String valueAnswer,
+    String? textAnswer,
+    List selected,
+  ) {
+    return CheckboxListTile(
+      controlAffinity: ListTileControlAffinity.leading,
+      value: selected.contains(valueAnswer),
+      onChanged: (value) {
+        setState(() {
+          if (selected.contains(valueAnswer)) {
+            selected.remove(valueAnswer);
+            QuizList.answersMap[_indexQuestion!]!.answer = selected.join(',');
+          } else {
+            selected.add(valueAnswer);
+            QuizList.answersMap[_indexQuestion!]!.answer = selected.join(',');
+          }
+
+          QuizList.answersMap[_indexQuestion!]!.id = question.id;
+          QuizList.answersMap[_indexQuestion!]!.qtype = question.qtype;
+        });
+      },
+      activeColor: AppColors.MAIN,
+      title: Text(HtmlUnescape()
+          .convert('${valueAnswer.toUpperCase()} :  $textAnswer')),
     );
   }
 
