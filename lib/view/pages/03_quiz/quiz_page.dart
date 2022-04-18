@@ -110,92 +110,18 @@ class _QuizPageState extends State<QuizPage> {
           ? Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                RadioListTile<String>(
-                  title: Text(HtmlUnescape().convert('A :  ${question.a}')),
-                  value: a,
-                  groupValue: QuizList.answersList![_indexQuestion!].answer,
-                  onChanged: (_) {
-                    setState(() {
-                      QuizList.answersList![_indexQuestion!].answer = a;
-                      QuizList.answersList![_indexQuestion!].id = question.id;
-                      QuizList.answersList![_indexQuestion!].qtype =
-                          question.qtype;
-                    });
-                  },
-                ),
-                RadioListTile<String>(
-                  title: Text(HtmlUnescape().convert('B :  ${question.b}')),
-                  value: b,
-                  groupValue: QuizList.answersList![_indexQuestion!].answer,
-                  onChanged: (_) {
-                    setState(() {
-                      QuizList.answersList![_indexQuestion!].answer = b;
-                      QuizList.answersList![_indexQuestion!].id = question.id;
-                      QuizList.answersList![_indexQuestion!].qtype =
-                          question.qtype;
-                    });
-                  },
-                ),
-                RadioListTile<String>(
-                  title: Text(HtmlUnescape().convert('C :  ${question.c}')),
-                  value: c,
-                  groupValue: QuizList.answersList![_indexQuestion!].answer,
-                  onChanged: (_) {
-                    setState(() {
-                      QuizList.answersList![_indexQuestion!].answer = c;
-                      QuizList.answersList![_indexQuestion!].id = question.id;
-                      QuizList.answersList![_indexQuestion!].qtype =
-                          question.qtype;
-                    });
-                  },
-                ),
-                RadioListTile<String>(
-                  title: Text(HtmlUnescape().convert('D :  ${question.d}')),
-                  value: d,
-                  groupValue: QuizList.answersList![_indexQuestion!].answer,
-                  onChanged: (_) {
-                    setState(() {
-                      QuizList.answersList![_indexQuestion!].answer = d;
-                      QuizList.answersList![_indexQuestion!].id = question.id;
-                      QuizList.answersList![_indexQuestion!].qtype =
-                          question.qtype;
-                    });
-                  },
-                ),
+                _radioList(question, a, question.a),
+                _radioList(question, b, question.b),
+                _radioList(question, c, question.c),
+                _radioList(question, d, question.d),
               ],
             )
           : question.qtype == 'T'
               ? Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    RadioListTile<String>(
-                      title: Text(HtmlUnescape().convert('A :  ${question.a}')),
-                      value: a,
-                      groupValue: QuizList.answersList![_indexQuestion!].answer,
-                      onChanged: (_) {
-                        setState(() {
-                          QuizList.answersList![_indexQuestion!].answer = a;
-                          QuizList.answersList![_indexQuestion!].id =
-                              question.id;
-                          QuizList.answersList![_indexQuestion!].qtype =
-                              question.qtype;
-                        });
-                      },
-                    ),
-                    RadioListTile<String>(
-                      title: Text(HtmlUnescape().convert('B :  ${question.b}')),
-                      value: b,
-                      groupValue: QuizList.answersList![_indexQuestion!].answer,
-                      onChanged: (_) {
-                        setState(() {
-                          QuizList.answersList![_indexQuestion!].answer = b;
-                          QuizList.answersList![_indexQuestion!].id =
-                              question.id;
-                          QuizList.answersList![_indexQuestion!].qtype =
-                              question.qtype;
-                        });
-                      },
-                    ),
+                    _radioList(question, a, question.a),
+                    _radioList(question, b, question.b),
                   ],
                 )
               : Column(
@@ -211,8 +137,25 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
+  RadioListTile<String> _radioList(
+      DataExam question, String value, String? textAnswer) {
+    return RadioListTile<String>(
+      title:
+          Text(HtmlUnescape().convert('${value.toUpperCase()} :  $textAnswer')),
+      value: value,
+      groupValue: QuizList.answersMap[_indexQuestion!]!.answer,
+      onChanged: (_) {
+        setState(() {
+          QuizList.answersMap[_indexQuestion!]!.answer = value;
+          QuizList.answersMap[_indexQuestion!]!.id = question.id;
+          QuizList.answersMap[_indexQuestion!]!.qtype = question.qtype;
+        });
+      },
+    );
+  }
+
   void _nextSubmit() {
-    if (QuizList.answersList![_indexQuestion!].answer == null) {
+    if (QuizList.answersMap[_indexQuestion!]!.answer == null) {
       // ignore: deprecated_member_use
       _key.currentState!.showSnackBar(const SnackBar(
         content: Text("You must select an answer to continue."),
@@ -221,7 +164,7 @@ class _QuizPageState extends State<QuizPage> {
     } else {
       // ignore: avoid_print
       print(
-          '${QuizList.answersList![_indexQuestion!].answer} , ${QuizList.answersList![_indexQuestion!].id} , ${QuizList.answersList![_indexQuestion!].qtype},');
+          '${QuizList.answersMap[_indexQuestion!]!.answer} , ${QuizList.answersMap[_indexQuestion!]!.id} , ${QuizList.answersMap[_indexQuestion!]!.qtype},');
       Get.back();
     }
   }
@@ -256,3 +199,44 @@ class _QuizPageState extends State<QuizPage> {
     await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   }
 }
+
+
+// RadioListTile<String>(
+//                   title: Text(HtmlUnescape().convert('B :  ${question.b}')),
+//                   value: b,
+//                   groupValue: QuizList.answersList![_indexQuestion!].answer,
+//                   onChanged: (_) {
+//                     setState(() {
+//                       QuizList.answersList![_indexQuestion!].answer = b;
+//                       QuizList.answersList![_indexQuestion!].id = question.id;
+//                       QuizList.answersList![_indexQuestion!].qtype =
+//                           question.qtype;
+//                     });
+//                   },
+//                 ),
+//                 RadioListTile<String>(
+//                   title: Text(HtmlUnescape().convert('C :  ${question.c}')),
+//                   value: c,
+//                   groupValue: QuizList.answersList![_indexQuestion!].answer,
+//                   onChanged: (_) {
+//                     setState(() {
+//                       QuizList.answersList![_indexQuestion!].answer = c;
+//                       QuizList.answersList![_indexQuestion!].id = question.id;
+//                       QuizList.answersList![_indexQuestion!].qtype =
+//                           question.qtype;
+//                     });
+//                   },
+//                 ),
+//                 RadioListTile<String>(
+//                   title: Text(HtmlUnescape().convert('D :  ${question.d}')),
+//                   value: d,
+//                   groupValue: QuizList.answersList![_indexQuestion!].answer,
+//                   onChanged: (_) {
+//                     setState(() {
+//                       QuizList.answersList![_indexQuestion!].answer = d;
+//                       QuizList.answersList![_indexQuestion!].id = question.id;
+//                       QuizList.answersList![_indexQuestion!].qtype =
+//                           question.qtype;
+//                     });
+//                   },
+//                 ),

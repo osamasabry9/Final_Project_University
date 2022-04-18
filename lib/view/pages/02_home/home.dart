@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
       showSkip: true,
       skip: signOut(),
       isFooter: false,
-      title: "Select a category",
+      title: "Select ",
       body: Padding(
         padding: const EdgeInsets.only(
           top: 20,

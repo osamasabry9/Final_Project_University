@@ -18,7 +18,8 @@ class QuizList extends StatefulWidget {
   final String? courseName;
   final int? courseId;
   static AddAnswers? answers;
-  static List<Answers>? answersList = [];
+
+  static Map<int, Answers> answersMap = {};
   const QuizList({
     Key? key,
     required this.courseName,
@@ -32,16 +33,16 @@ class QuizList extends StatefulWidget {
 class _QuizListState extends State<QuizList> {
   final answerController = Get.find<AnswersController>();
   List<DataExam>? questions;
-  int i = 0;
+  //int i = 0;
   @override
   void initState() {
     questions = Get.find<QuizController>().examModel!.data!;
     super.initState();
-    for (i = 0; i < questions!.length; i++) {
-      QuizList.answersList!
-          .insertAll(i, [Answers(id: 0, answer: '', qtype: '')]);
-      // .add(;
-    }
+    // for (i = 0; i < questions!.length; i++) {
+    //   QuizList.answersList!
+    //       .insertAll(i, [Answers(id: 0, answer: '', qtype: '')]);
+    //   // .add(;
+    // }
     Timer(const Duration(seconds: 10000000), () {
       //Get.off(() => QuizFinishedPage(questions: questions!));
     });
@@ -50,7 +51,8 @@ class _QuizListState extends State<QuizList> {
   @override
   void dispose() {
     questions!.clear();
-    QuizList.answersList!.clear();
+    //QuizList.answersList!.clear();
+    QuizList.answersMap.clear();
     super.dispose();
   }
 
@@ -89,9 +91,7 @@ class _QuizListState extends State<QuizList> {
     return MainButton(
       title: " Submit",
       onTap: () async {
-
-        answerController.postExamData(widget.courseId!, QuizList.answersList!);
-  
+        answerController.postExamData(widget.courseId!, questions!.length ,QuizList.answersMap);
       },
     );
   }
@@ -111,11 +111,19 @@ class _QuizListState extends State<QuizList> {
       margin: const EdgeInsets.only(bottom: 5),
       child: GestureDetector(
         onTap: () {
-
-          Get.to(() => QuizPage(
-                question: question,
-                indexQuestion: index,
-              ));
+          if (QuizList.answersMap.containsKey(index)) {
+            Get.to(() => QuizPage(
+                  question: question,
+                  indexQuestion: index,
+                ));
+          } else {
+            QuizList.answersMap.addAll(
+                {index: Answers(id: question.id, answer: '', qtype: '')});
+            Get.to(() => QuizPage(
+                  question: question,
+                  indexQuestion: index,
+                ));
+          }
           // ignore: avoid_print
           print('######################');
         },
