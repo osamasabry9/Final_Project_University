@@ -162,13 +162,15 @@ class _QuizPageState extends State<QuizPage> {
                           label: 'Enter your answer',
                           textController: textAnswerController,
                           validate: (String? text) {},
-                          onFieldSubmitted: (String? value)
-                          {
+                          onFieldSubmitted: (String? value) {
                             setState(() {
-          QuizList.answersMap[_indexQuestion!]!.answer = value;
-          QuizList.answersMap[_indexQuestion!]!.id = question.id;
-          QuizList.answersMap[_indexQuestion!]!.qtype = question.qtype;
-        });
+                              QuizList.answersMap[_indexQuestion!]!.answer =
+                                  value;
+                              QuizList.answersMap[_indexQuestion!]!.id =
+                                  question.id;
+                              QuizList.answersMap[_indexQuestion!]!.qtype =
+                                  question.qtype;
+                            });
                             return null;
                           },
                         ),
