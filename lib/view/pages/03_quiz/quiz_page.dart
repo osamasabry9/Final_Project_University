@@ -107,7 +107,7 @@ class _QuizPageState extends State<QuizPage> {
 
     TextEditingController textAnswerController = TextEditingController();
     return Card(
-      child: question.qtype == 'Y'
+      child: question.qtype == 'M'
           ? Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -117,7 +117,7 @@ class _QuizPageState extends State<QuizPage> {
                 _radioList(question, d, question.d),
               ],
             )
-          : question.qtype == 'M'
+          : question.qtype == 'Y'
               ? Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
@@ -162,6 +162,15 @@ class _QuizPageState extends State<QuizPage> {
                           label: 'Enter your answer',
                           textController: textAnswerController,
                           validate: (String? text) {},
+                          onFieldSubmitted: (String? value)
+                          {
+                            setState(() {
+          QuizList.answersMap[_indexQuestion!]!.answer = value;
+          QuizList.answersMap[_indexQuestion!]!.id = question.id;
+          QuizList.answersMap[_indexQuestion!]!.qtype = question.qtype;
+        });
+                            return null;
+                          },
                         ),
                       ],
                     ),
@@ -259,44 +268,3 @@ class _QuizPageState extends State<QuizPage> {
     await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   }
 }
-
-
-// RadioListTile<String>(
-//                   title: Text(HtmlUnescape().convert('B :  ${question.b}')),
-//                   value: b,
-//                   groupValue: QuizList.answersList![_indexQuestion!].answer,
-//                   onChanged: (_) {
-//                     setState(() {
-//                       QuizList.answersList![_indexQuestion!].answer = b;
-//                       QuizList.answersList![_indexQuestion!].id = question.id;
-//                       QuizList.answersList![_indexQuestion!].qtype =
-//                           question.qtype;
-//                     });
-//                   },
-//                 ),
-//                 RadioListTile<String>(
-//                   title: Text(HtmlUnescape().convert('C :  ${question.c}')),
-//                   value: c,
-//                   groupValue: QuizList.answersList![_indexQuestion!].answer,
-//                   onChanged: (_) {
-//                     setState(() {
-//                       QuizList.answersList![_indexQuestion!].answer = c;
-//                       QuizList.answersList![_indexQuestion!].id = question.id;
-//                       QuizList.answersList![_indexQuestion!].qtype =
-//                           question.qtype;
-//                     });
-//                   },
-//                 ),
-//                 RadioListTile<String>(
-//                   title: Text(HtmlUnescape().convert('D :  ${question.d}')),
-//                   value: d,
-//                   groupValue: QuizList.answersList![_indexQuestion!].answer,
-//                   onChanged: (_) {
-//                     setState(() {
-//                       QuizList.answersList![_indexQuestion!].answer = d;
-//                       QuizList.answersList![_indexQuestion!].id = question.id;
-//                       QuizList.answersList![_indexQuestion!].qtype =
-//                           question.qtype;
-//                     });
-//                   },
-//                 ),

@@ -15,6 +15,7 @@ class InputField extends StatelessWidget {
   final IconData? suffix;
   final dynamic suffixPressed;
   final String? Function(String?) validate;
+  final String? Function(String?)? onFieldSubmitted;
   TextEditingController textController = TextEditingController();
 
   // ignore: use_key_in_widget_constructors
@@ -29,6 +30,7 @@ class InputField extends StatelessWidget {
     this.suffix,
     this.suffixPressed,
     required this.validate,
+    this.onFieldSubmitted,
   });
 
   @override
@@ -50,6 +52,7 @@ class InputField extends StatelessWidget {
               obscureText: isPassword,
               validator: validate,
               maxLines: maxLine,
+              onFieldSubmitted: onFieldSubmitted,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),

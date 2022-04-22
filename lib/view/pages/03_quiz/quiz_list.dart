@@ -159,7 +159,7 @@ class _QuizListState extends State<QuizList> {
                                 ? 'written'
                                 : question.qtype == 'T'
                                     ? 'True & False'
-                                    : question.qtype == 'Y'
+                                    : question.qtype == 'M'
                                         ? 'One Choice'
                                         : 'Multichoice',
                             style: GoogleFonts.cousine(
