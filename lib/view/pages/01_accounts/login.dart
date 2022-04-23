@@ -114,6 +114,7 @@ class LoginScreen extends GetView<LoginController> {
                 password: controller.passwordController.text,
               );
               token = CacheHelper.getData('token');
+              std_id = CacheHelper.getData('std_id');
             }
           },
         ),

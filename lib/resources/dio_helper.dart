@@ -7,7 +7,7 @@ class DioHelper {
     // ignore: avoid_print
     print('dioHelper Initialized');
     dio = Dio(BaseOptions(
-      baseUrl: 'https://d64d-156-210-84-246.ngrok.io',
+      baseUrl: 'https://48ef-156-210-102-156.ngrok.io',
       receiveDataWhenStatusError: true,
     ));
   }

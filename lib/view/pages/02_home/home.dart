@@ -93,7 +93,7 @@ class HomePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 color: data.isExaminated == false
                     ? _getBGClr(2)
-                    : data.currentMarks! > 50
+                    : data.currentMarks! > 60
                         ? _getBGClr(0)
                         : _getBGClr(1),
               ),
@@ -271,9 +271,9 @@ class HomePage extends StatelessWidget {
       case 0:
         return AppColors.kGreenColor.withOpacity(0.5);
       case 1:
-        return AppColors.kRedColor.withOpacity(0.5);
+        return AppColors.kRedColor.withOpacity(0.7);
       case 2:
-        return AppColors.kSecondaryColor.withOpacity(0.5);
+        return AppColors.kSecondaryColor;
       default:
         return AppColors.kGrayColor;
     }

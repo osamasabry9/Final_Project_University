@@ -17,7 +17,6 @@ import 'package:quiz_app_api/view/widgets/main_button.dart';
 class QuizList extends StatefulWidget {
   final String? courseName;
   final int? courseId;
-  static AddAnswers? answers;
 
   static Map<int, Answers> answersMap = {};
   const QuizList({
@@ -33,25 +32,22 @@ class QuizList extends StatefulWidget {
 class _QuizListState extends State<QuizList> {
   final answerController = Get.find<AnswersController>();
   List<DataExam>? questions;
-  //int i = 0;
+
   @override
   void initState() {
     questions = Get.find<QuizController>().examModel!.data!;
     super.initState();
-    // for (i = 0; i < questions!.length; i++) {
-    //   QuizList.answersList!
-    //       .insertAll(i, [Answers(id: 0, answer: '', qtype: '')]);
-    //   // .add(;
-    // }
+
     Timer(const Duration(seconds: 10000000), () {
-      //Get.off(() => QuizFinishedPage(questions: questions!));
+      answerController.postExamData(
+            widget.courseId!, questions!.length, QuizList.answersMap);
+      
     });
   }
 
   @override
   void dispose() {
     questions!.clear();
-    //QuizList.answersList!.clear();
     QuizList.answersMap.clear();
     super.dispose();
   }

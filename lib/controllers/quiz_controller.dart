@@ -21,6 +21,7 @@ class QuizController extends GetxController {
       url: EXAM,
       query: {
         'course_id': '$courseId',
+        'student_id' : '$std_id',
       },
     ).then((value) async {
       // examData = ExamModel.fromJson(value.data).toList();

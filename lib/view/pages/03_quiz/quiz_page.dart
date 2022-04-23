@@ -126,25 +126,25 @@ class _QuizPageState extends State<QuizPage> {
                         a,
                         question.a,
                         QuizList.answersMap[_indexQuestion!]!.answer!
-                            .split(',')),
+                            .split('')),
                     _checkboxList(
                         question,
                         b,
                         question.b,
                         QuizList.answersMap[_indexQuestion!]!.answer!
-                            .split(',')),
+                            .split('')),
                     _checkboxList(
                         question,
                         c,
                         question.c,
                         QuizList.answersMap[_indexQuestion!]!.answer!
-                            .split(',')),
+                            .split('')),
                     _checkboxList(
                         question,
                         d,
                         question.d,
                         QuizList.answersMap[_indexQuestion!]!.answer!
-                            .split(',')),
+                            .split('')),
                   ],
                 )
               : question.qtype == 'T'
@@ -160,12 +160,13 @@ class _QuizPageState extends State<QuizPage> {
                       children: [
                         InputField(
                           label: 'Enter your answer',
+                          maxLine: 10,
                           textController: textAnswerController,
                           validate: (String? text) {},
                           onFieldSubmitted: (String? value) {
                             setState(() {
                               QuizList.answersMap[_indexQuestion!]!.answer =
-                                  value;
+                                  value!.trim();
                               QuizList.answersMap[_indexQuestion!]!.id =
                                   question.id;
                               QuizList.answersMap[_indexQuestion!]!.qtype =
@@ -209,10 +210,10 @@ class _QuizPageState extends State<QuizPage> {
         setState(() {
           if (selected.contains(valueAnswer)) {
             selected.remove(valueAnswer);
-            QuizList.answersMap[_indexQuestion!]!.answer = selected.join(',');
+            QuizList.answersMap[_indexQuestion!]!.answer = selected.join('');
           } else {
             selected.add(valueAnswer);
-            QuizList.answersMap[_indexQuestion!]!.answer = selected.join(',');
+            QuizList.answersMap[_indexQuestion!]!.answer = selected.join('');
           }
 
           QuizList.answersMap[_indexQuestion!]!.id = question.id;

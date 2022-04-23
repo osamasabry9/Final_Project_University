@@ -26,7 +26,7 @@ class CourseController extends GetxController {
     DioHelper.getData(
       url: COURSE,
       query: {
-        'std_id': '$std_id',
+        'student_id': '$std_id',
       },
     ).then((value) async {
       courseModel = StudentCoursesModel.fromJson(value.data);

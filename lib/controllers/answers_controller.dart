@@ -19,8 +19,9 @@ class AnswersController extends GetxController {
     List<Answers> answersList = [];
    answersMap.forEach((key, value)=> answersList.add(value));
     DioHelper.postData(url: EXAM, data: {
-      "std_id": "$std_id",
+      "student_id": "$std_id",
       "course_id": courseId,
+      'total_num_of_questions' : totalQuestion,
       "answers": answersList,
     }).then((value) async {
       results = ResultsExamination.fromJson(value.data);
