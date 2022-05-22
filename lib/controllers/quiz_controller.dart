@@ -19,6 +19,7 @@ class QuizController extends GetxController {
     isLoding.value = true;
     DioHelper.getData(
       url: EXAM,
+      token: token,
       query: {
         'course_id': '$courseId',
         'student_id' : '$std_id',

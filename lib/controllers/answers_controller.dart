@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:quiz_app_api/models/post_examination.dart';
 import 'package:quiz_app_api/models/results_model.dart';
@@ -12,16 +11,17 @@ class AnswersController extends GetxController {
   late ResultsExamination results;
   RxBool isLoding = false.obs;
 
-  void postExamData(int courseId, int totalQuestion, Map<int, Answers> answersMap) async {
+  void postExamData(
+      int courseId, int totalQuestion, Map<int, Answers> answersMap) async {
     isLoding.value = true;
     // int totalQuestion = answersMap.length;
     //var fin = answersList.map((e) => e.toJson()).toList();
     List<Answers> answersList = [];
-   answersMap.forEach((key, value)=> answersList.add(value));
-    DioHelper.postData(url: EXAM, data: {
+    answersMap.forEach((key, value) => answersList.add(value));
+    DioHelper.postData(url: EXAM, token: token, data: {
       "student_id": "$std_id",
       "course_id": courseId,
-      'total_num_of_questions' : totalQuestion,
+      'total_num_of_questions': totalQuestion,
       "answers": answersList,
     }).then((value) async {
       results = ResultsExamination.fromJson(value.data);

@@ -25,6 +25,7 @@ class CourseController extends GetxController {
     isLoding.value = true;
     DioHelper.getData(
       url: COURSE,
+      token: token,
       query: {
         'student_id': '$std_id',
       },

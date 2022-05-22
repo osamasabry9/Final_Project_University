@@ -7,7 +7,7 @@ class DioHelper {
     // ignore: avoid_print
     print('dioHelper Initialized');
     dio = Dio(BaseOptions(
-      baseUrl: 'https://48ef-156-210-102-156.ngrok.io',
+      baseUrl: 'https://4bf0-156-210-18-169.ngrok.io',
       receiveDataWhenStatusError: true,
     ));
   }
@@ -22,7 +22,7 @@ class DioHelper {
     dio.options.headers = {
       //'lang':lang,
       'Content-Type': 'application/json',
-      'Authorization': '$token'
+      'Authorization': 'Bearer ${token}'
     };
     return await dio.get(url, queryParameters: query);
   }
@@ -36,7 +36,7 @@ class DioHelper {
     dio.options.headers = {
       //'lang':lang,
       'Content-Type': 'application/json',
-      //'Authorization': '$token'
+      'Authorization': 'Bearer ${token}'
     };
     return await dio.post(
       url,

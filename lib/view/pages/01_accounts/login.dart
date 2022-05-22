@@ -40,31 +40,32 @@ class LoginScreen extends GetView<LoginController> {
                     ),
                   ),
                 ),
-                const SubTitle(
-                    "Sign in with your email and password to continue"),
-                const SizedBox(height: 20),
+                const SizedBox(height: 40),
                 InputField(
                   textController: controller.emailController,
-                  label: "Email / Phone number",
-                  hint: "Enter email or phone number",
-                  prefix: Icons.email_outlined,
+                  label: "UserName",
+                  hint: "Enter User Name",
+                  prefix: Icons.person,
                   validate: (value) {
                     return controller.validateEmail(value!.toString());
                   },
                 ),
                 const SizedBox(height: 15),
-                InputField(
-                  textController: controller.passwordController,
-                  label: "Password",
-                  hint: "Enter password",
-                  isPassword: true,
-                  prefix: Icons.lock,
-                  suffix: Icons.remove_red_eye,
-                  // isPassword:
-                  //     !LoginCubit.get(context).showPassword ? true : false,
-                  validate: (value) {
-                    return controller.validatePassword(value!.toString());
-                  },
+                Obx(
+                  () => InputField(
+                    textController: controller.passwordController,
+                    label: "Password",
+                    hint: "Enter password",
+                    isPassword: controller.isPassword.value,
+                    prefix: Icons.lock,
+                    suffix: Icons.remove_red_eye,
+                    suffixPressed: () {
+                      controller.changePasswordVisibility();
+                    },
+                    validate: (value) {
+                      return controller.validatePassword(value!.toString());
+                    },
+                  ),
                 ),
                 const SizedBox(height: 20),
                 Row(
@@ -103,9 +104,9 @@ class LoginScreen extends GetView<LoginController> {
         ),
       ),
       footer: [
-       MainButton(
-           isLoding: controller.isLoding.value,
-           title: "Sign in",
+        MainButton(
+          isLoding: controller.isLoding.value,
+          title: "Sign in",
           onTap: () {
             //Get.offAll(() => const Authenticate());
             if (controller.loginFormKey.currentState!.validate()) {

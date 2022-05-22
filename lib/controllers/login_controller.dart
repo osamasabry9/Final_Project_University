@@ -29,7 +29,7 @@ class LoginController extends GetxController {
     required String password,
   }) {
     isLoding(true);
-    DioHelper.postData(url: LOGIN,  data: {
+    DioHelper.postData(url: LOGIN, data: {
       'username': email,
       'password': password,
     }).then((value) {
@@ -78,6 +78,15 @@ class LoginController extends GetxController {
       return 'Password must be filled';
     }
     return null;
+  }
+
+  Rx<IconData> suffix = Icons.visibility_outlined.obs;
+  RxBool isPassword = true.obs;
+
+  void changePasswordVisibility() {
+    isPassword.value = !isPassword.value;
+    suffix.value =
+        isPassword.value ? Icons.visibility_outlined : Icons.visibility_off_outlined;
   }
 
   @override

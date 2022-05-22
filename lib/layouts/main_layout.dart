@@ -71,10 +71,6 @@ class MainLayout extends StatelessWidget {
                               topLeft: Radius.circular(50),
                               topRight: Radius.circular(50),
                             ),
-                            image: DecorationImage(
-                                image: AssetImage(AppImages.BACKGROUND_LOGN),
-                                opacity: 0.8,
-                                fit: BoxFit.cover),
                           ),
                           child: Column(
                             children: [

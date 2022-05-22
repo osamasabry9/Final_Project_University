@@ -5,6 +5,7 @@ import 'package:quiz_app_api/resources/cache_helper.dart';
 import 'package:quiz_app_api/resources/dio_helper.dart';
 import 'package:quiz_app_api/shared/config/app_colors.dart';
 import 'package:quiz_app_api/shared/constants.dart';
+import 'package:quiz_app_api/view/pages/00_intro/onboarding.dart';
 
 import 'bindings/home_binding.dart';
 import 'view/pages/00_intro/splash.dart';
@@ -14,7 +15,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
   await CacheHelper.init();
-
 
   // Widget widget;
 //Take the values from the cache helper
@@ -34,12 +34,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   // Get.find<CourseController>().getCourseData();
+    // Get.find<CourseController>().getCourseData();
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Quiz',
       initialBinding: HomeBinding(),
-      home: const SplashScreen(),
+      home: const OnBoarding(),
       theme: themeApp(),
     );
   }

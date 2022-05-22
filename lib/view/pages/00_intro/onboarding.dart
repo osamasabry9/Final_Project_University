@@ -24,7 +24,6 @@ class _OnBoardingState extends State<OnBoarding> {
   void initState() {
     pageController = PageController();
     super.initState();
-    
   }
 
   var currentPage = 0;
@@ -35,7 +34,7 @@ class _OnBoardingState extends State<OnBoarding> {
       CacheHelper.saveData(key: 'ShowOnBoard', value: false).then((value) {
         if (value) Get.off(() => const LoginScreen());
       });
-     // Get.off(() => const LoginScreen());
+      // Get.off(() => const LoginScreen());
     } else {
       pageController.animateToPage(currentPage + 1,
           duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
@@ -82,10 +81,10 @@ class _OnBoardingState extends State<OnBoarding> {
 
   Widget showSkip() {
     return GestureDetector(
-      child: const Text("Skip", style: AppStyles.paragraph1),
+      child: Text("Skip", style: AppStyles.paragraph1),
       onTap: () {
-         CacheHelper.saveData(key: 'ShowOnBoard', value: false).then((value) {
-        if (value) Get.off(() => const LoginScreen());
+        CacheHelper.saveData(key: 'ShowOnBoard', value: false).then((value) {
+          if (value) Get.off(() => const LoginScreen());
         });
       },
     );

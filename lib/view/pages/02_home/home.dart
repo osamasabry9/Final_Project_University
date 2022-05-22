@@ -14,11 +14,10 @@ import 'package:quiz_app_api/shared/config/app_colors.dart';
 import 'package:quiz_app_api/view/pages/01_accounts/login.dart';
 import 'package:quiz_app_api/view/pages/04_additions/error.dart';
 
-import '../../../shared/config/app_styles.dart';
-
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
   final controllerExam = Get.find<QuizController>();
+
   @override
   Widget build(BuildContext context) {
     return MainLayout(
@@ -26,7 +25,7 @@ class HomePage extends StatelessWidget {
       showSkip: true,
       skip: signOut(),
       isFooter: false,
-      title: "Select ",
+      title: "Welcome ",
       body: Padding(
         padding: const EdgeInsets.only(
           top: 20,
@@ -80,12 +79,19 @@ class HomePage extends StatelessWidget {
           var myTime = DateFormat('HH:mm').format(time);
           return GestureDetector(
             onTap: () {
-              //TODO: implement is go to EXAM
-              //if (data.isExaminated == false) {
-              // print(data.courseId!);
-              Get.find<QuizController>()
-                  .getExamData(data.courseId!, data.courseName!);
-              //}
+              DateTime _selectedDate = DateTime.now();
+              // print(
+              //     "${DateFormat.yMMMd().format(DateTime.now())}, ${myDate} , *** ${DateFormat.Hm().format(_selectedDate)}");
+              if (data.isExaminated == false &&
+                  myDate == DateFormat.yMMMd().format(_selectedDate) &&
+                  (myTime == DateFormat.Hm().format(_selectedDate) ||
+                      myTime ==
+                          DateFormat.Hm().format(
+                              _selectedDate.add(const Duration(minutes: 5))))) {
+                // print(data.courseId!);
+                Get.find<QuizController>()
+                    .getExamData(data.courseId!, data.courseName!);
+              }
             },
             child: Container(
               padding: const EdgeInsets.all(12),
@@ -110,7 +116,7 @@ class HomePage extends StatelessWidget {
                               const SizedBox(width: 15.0),
                               Text(
                                 data.courseName.toString(),
-                                style: GoogleFonts.lato(
+                                style: GoogleFonts.raleway(
                                   textStyle: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -136,7 +142,7 @@ class HomePage extends StatelessWidget {
                               ),
                               Text(
                                 'Date:  $myDate',
-                                style: GoogleFonts.lato(
+                                style: GoogleFonts.raleway(
                                   textStyle: TextStyle(
                                     fontSize: 13,
                                     color: Colors.grey[100],
@@ -148,7 +154,7 @@ class HomePage extends StatelessWidget {
                               ),
                               Text(
                                 'Time:  $myTime',
-                                style: GoogleFonts.lato(
+                                style: GoogleFonts.raleway(
                                   textStyle: TextStyle(
                                     fontSize: 13,
                                     color: Colors.grey[100],
@@ -172,7 +178,7 @@ class HomePage extends StatelessWidget {
                               ),
                               Text(
                                 '${data.durationInMinutes}  Minutes',
-                                style: GoogleFonts.lato(
+                                style: GoogleFonts.raleway(
                                   textStyle: TextStyle(
                                     fontSize: 13,
                                     color: Colors.grey[100],
@@ -198,7 +204,7 @@ class HomePage extends StatelessWidget {
                                 ),
                                 Text(
                                   'Total Marks:  ${data.totalMarks}',
-                                  style: GoogleFonts.lato(
+                                  style: GoogleFonts.raleway(
                                     textStyle: TextStyle(
                                       fontSize: 13,
                                       color: Colors.grey[100],
@@ -210,7 +216,7 @@ class HomePage extends StatelessWidget {
                                 ),
                                 Text(
                                   'Current Marks:  ${data.currentMarks}',
-                                  style: GoogleFonts.lato(
+                                  style: GoogleFonts.raleway(
                                     textStyle: TextStyle(
                                       fontSize: 13,
                                       color: Colors.grey[100],
@@ -233,7 +239,7 @@ class HomePage extends StatelessWidget {
                     quarterTurns: 3,
                     child: Text(
                       data.isExaminated == false ? 'ToDo' : 'Completed',
-                      style: GoogleFonts.lato(
+                      style: GoogleFonts.raleway(
                         textStyle: const TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
@@ -281,8 +287,10 @@ class HomePage extends StatelessWidget {
 
   Widget signOut() {
     return GestureDetector(
-      child: Text("Sign Out",
-          style: AppStyles.paragraph1.copyWith(color: AppColors.MAIN)),
+      child: const Icon(
+        Icons.logout_outlined,
+        color: Colors.white,
+      ),
       onTap: () {
         CacheHelper.removeData('token').then((value) {
           if (value) Get.offAll(() => const LoginScreen());

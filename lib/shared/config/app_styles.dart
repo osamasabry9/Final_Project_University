@@ -1,37 +1,55 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 
 class AppStyles {
-  static const TextStyle paragraph1 = TextStyle(
+  static  TextStyle paragraph1 = GoogleFonts.raleway(
+    textStyle: const TextStyle(
       fontSize: 16,
-      fontFamily: "Montserrat",
       color: Colors.white,
-      fontWeight: FontWeight.w400);
+      fontWeight: FontWeight.w400,
+    ),
+  );
 
-  static const TextStyle hdr = TextStyle(
+  static  TextStyle hdr = GoogleFonts.raleway(
+    textStyle: const TextStyle(
       fontSize: 21,
-      fontFamily: "Montserrat",
       color: Colors.white,
-      fontWeight: FontWeight.w600);
+      fontWeight: FontWeight.w600,
+    ),
+  );
 
-  static const TextStyle headline = TextStyle(
+  static  TextStyle headline = GoogleFonts.raleway(
+    textStyle: const TextStyle(
       fontSize: 21,
-      fontFamily: "Montserrat",
       color: Colors.black,
-      fontWeight: FontWeight.w600);
+      fontWeight: FontWeight.w600,
+    ),
+  );
 
-  static const TextStyle description = TextStyle(
+  static TextStyle description = GoogleFonts.raleway(
+    textStyle: const TextStyle(
       fontSize: 15,
-      fontFamily: "Montserrat",
       color: Colors.black,
-      fontWeight: FontWeight.w300);
+      fontWeight: FontWeight.w300,
+    ),
+  );
 
-  static const TextStyle input_label = TextStyle(
+  static TextStyle input_label = GoogleFonts.raleway(
+    textStyle: const TextStyle(
       fontSize: 14,
-      fontFamily: "Montserrat",
-      color: AppColors.LABEL,
-      fontWeight: FontWeight.w300);
+      color: Colors.black54,
+      fontWeight: FontWeight.w300,
+    ),
+  );
+  static TextStyle input_labe2 = GoogleFonts.raleway(
+    textStyle: const TextStyle(
+      fontSize: 14,
+      color: AppColors.kGrayColor,
+      fontWeight: FontWeight.w300,
+    ),
+  );
 }
