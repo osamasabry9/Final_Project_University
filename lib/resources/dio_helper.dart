@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 import 'package:dio/dio.dart';
 
 class DioHelper {
@@ -7,7 +9,7 @@ class DioHelper {
     // ignore: avoid_print
     print('dioHelper Initialized');
     dio = Dio(BaseOptions(
-      baseUrl: 'https://4bf0-156-210-18-169.ngrok.io',
+      baseUrl: 'https://0b39-156-210-61-184.ngrok.io',
       receiveDataWhenStatusError: true,
     ));
   }

@@ -6,15 +6,15 @@ class AppData {
   static const List<IntroPage> introPages = [
     IntroPage(
         image: AppImages.INTRO_1,
-        headline: "Shop your daily needs",
-        description: "You won't find it cheaper anywhere else than Gronik"),
+        headline: "online exam",
+        description: "Our app helps any organization to test anyone online"),
     IntroPage(
         image: AppImages.INTRO_2,
-        headline: "Existing offers",
-        description: "Get new offers and great deals every day every hour"),
+        headline: "Focus on the exam.",
+        description: "Answer your question accurately"),
     IntroPage(
         image: AppImages.INTRO_3,
-        headline: "1000+ products",
-        description: "Shop and get delivery at your convenience"),
+        headline: "Take your time ",
+        description: "You have enough time to think don't hurry"),
   ];
 }

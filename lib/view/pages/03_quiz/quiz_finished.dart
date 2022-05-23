@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quiz_app_api/layouts/main_layout.dart';
 import 'package:quiz_app_api/view/pages/02_home/home.dart';
+import 'package:quiz_app_api/view/widgets/main_button.dart';
 
 // ignore: must_be_immutable
 class QuizFinishedPage extends StatelessWidget {
@@ -11,11 +12,15 @@ class QuizFinishedPage extends StatelessWidget {
   final int currentScore;
   final int totalScore;
 
-  const QuizFinishedPage({Key? key, required this.currentScore, required this.totalScore, required this.totalQuestion, }) : super(key: key);
+  const QuizFinishedPage({
+    Key? key,
+    required this.currentScore,
+    required this.totalScore,
+    required this.totalQuestion,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     const TextStyle titleStyle = TextStyle(
         color: Colors.black87, fontSize: 16.0, fontWeight: FontWeight.w500);
     final TextStyle trailingStyle = TextStyle(
@@ -24,7 +29,6 @@ class QuizFinishedPage extends StatelessWidget {
         fontWeight: FontWeight.bold);
 
     return MainLayout(
-      isFooter: false,
       showBack: false,
       title: 'Result',
       body: Padding(
@@ -72,35 +76,43 @@ class QuizFinishedPage extends StatelessWidget {
                   contentPadding: const EdgeInsets.all(16.0),
                   title: const Text("Incorrect Answers", style: titleStyle),
                   trailing: Text(
-                      "${totalQuestion- currentScore}/$totalQuestion",
+                      "${totalQuestion - currentScore}/$totalQuestion",
                       style: trailingStyle),
                 ),
               ),
-              const SizedBox(height: 20.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  RaisedButton(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 20.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    color: Theme.of(context)
-                        .colorScheme
-                        .secondary
-                        .withOpacity(0.8),
-                    child: const Text("Goto Home"),
-                    onPressed: () => Get.off(() => HomePage()),
-                  ),
-                  
-                ],
-              )
             ],
           ),
         ),
       ),
-      footer: const [],
+      footer: [submit()],
+    );
+  }
+
+  Widget submit() {
+    return MainButton(
+      title: " Goto Home",
+      onTap: () => Get.off(() => HomePage()),
     );
   }
 }
+
+
+// const SizedBox(height: 20.0),
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: <Widget>[
+//                   RaisedButton(
+//                     padding: const EdgeInsets.symmetric(
+//                         horizontal: 16.0, vertical: 20.0),
+//                     shape: RoundedRectangleBorder(
+//                       borderRadius: BorderRadius.circular(10.0),
+//                     ),
+//                     color: Theme.of(context)
+//                         .colorScheme
+//                         .secondary
+//                         .withOpacity(0.8),
+//                     child: const Text("Goto Home"),
+//                     onPressed: () => Get.off(() => HomePage()),
+//                   ),
+//                 ],
+//               )

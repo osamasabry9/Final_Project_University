@@ -6,6 +6,8 @@ import 'package:quiz_app_api/resources/dio_helper.dart';
 import 'package:quiz_app_api/shared/config/app_colors.dart';
 import 'package:quiz_app_api/shared/constants.dart';
 import 'package:quiz_app_api/view/pages/00_intro/onboarding.dart';
+import 'package:quiz_app_api/view/pages/01_accounts/login.dart';
+import 'package:quiz_app_api/view/pages/04_additions/face_finger_page.dart';
 
 import 'bindings/home_binding.dart';
 import 'view/pages/00_intro/splash.dart';
@@ -16,7 +18,7 @@ Future<void> main() async {
   DioHelper.init();
   await CacheHelper.init();
 
-  // Widget widget;
+  Widget widget;
 //Take the values from the cache helper
   // bool? isDark = CacheHelper.getData('isDark');
 
@@ -24,13 +26,22 @@ Future<void> main() async {
   showOnBoard = CacheHelper.getData('ShowOnBoard');
   token = CacheHelper.getData('token');
   std_id = CacheHelper.getData('std_id');
-
+  if (showOnBoard == false) {
+    if (token != null) {
+      widget = const Authenticate();
+    } else {
+      widget = const LoginScreen();
+    }
+  } else {
+    widget = const OnBoarding();
+  }
   //disableCapture();
-  runApp(const MyApp());
+  runApp( MyApp( startWidget: widget,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  late final Widget startWidget;
+  MyApp({Key? key,  required this.startWidget}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +50,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Quiz',
       initialBinding: HomeBinding(),
-      home: const OnBoarding(),
+      home:  startWidget,
       theme: themeApp(),
     );
   }

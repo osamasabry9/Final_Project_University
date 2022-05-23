@@ -28,7 +28,7 @@ class _QuizPageState extends State<QuizPage> {
     fontWeight: FontWeight.w500,
     color: AppColors.kBlackColor,
   );
-
+  var textAnswerController = TextEditingController();
   //int? _currentIndex;
   int? _indexQuestion;
 
@@ -37,14 +37,17 @@ class _QuizPageState extends State<QuizPage> {
   @override
   void initState() {
     super.initState();
-    // disableCapture();
-    //_currentIndex = widget.question.id;
     _indexQuestion = widget.indexQuestion;
   }
 
   @override
   Widget build(BuildContext context) {
     DataExam question = widget.question;
+    if (widget.question.qtype == 'W' &&
+        QuizList.answersMap[_indexQuestion!]!.answer! != '') {
+      textAnswerController.text =
+          QuizList.answersMap[_indexQuestion!]!.answer!.trim();
+    }
 
     return WillPopScope(
       onWillPop: () async {
@@ -105,7 +108,6 @@ class _QuizPageState extends State<QuizPage> {
     var c = 'c';
     var d = 'd';
 
-    TextEditingController textAnswerController = TextEditingController();
     return Card(
       child: question.qtype == 'M'
           ? Column(
@@ -162,7 +164,12 @@ class _QuizPageState extends State<QuizPage> {
                           label: 'Enter your answer',
                           maxLine: 10,
                           textController: textAnswerController,
-                          validate: (String? text) {},
+                          validate: (text) {
+                            // if (text!.isEmpty) {
+                            //   return 'You must answer the question.';
+                            // }
+                            // return null;
+                          },
                           onFieldSubmitted: (String? value) {
                             setState(() {
                               QuizList.answersMap[_indexQuestion!]!.answer =

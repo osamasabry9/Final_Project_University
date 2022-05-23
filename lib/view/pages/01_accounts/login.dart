@@ -11,7 +11,6 @@ import '../../../shared/config/app_styles.dart';
 import '../../../layouts/main_layout.dart';
 import '../../widgets/input_field_label.dart';
 import '../../widgets/main_button.dart';
-import '../../widgets/sub_title.dart';
 
 class LoginScreen extends GetView<LoginController> {
   const LoginScreen({Key? key}) : super(key: key);

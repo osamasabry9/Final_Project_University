@@ -11,6 +11,7 @@ import 'package:quiz_app_api/layouts/main_layout.dart';
 import 'package:quiz_app_api/models/courses_model.dart';
 import 'package:quiz_app_api/resources/cache_helper.dart';
 import 'package:quiz_app_api/shared/config/app_colors.dart';
+import 'package:quiz_app_api/shared/constants.dart';
 import 'package:quiz_app_api/view/pages/01_accounts/login.dart';
 import 'package:quiz_app_api/view/pages/04_additions/error.dart';
 
@@ -80,8 +81,8 @@ class HomePage extends StatelessWidget {
           return GestureDetector(
             onTap: () {
               DateTime _selectedDate = DateTime.now();
-              // print(
-              //     "${DateFormat.yMMMd().format(DateTime.now())}, ${myDate} , *** ${DateFormat.Hm().format(_selectedDate)}");
+              print(
+                  "${DateFormat.yMMMd().format(DateTime.now())}, ${myDate} , *** ${DateFormat.Hm().format(_selectedDate)}");
               if (data.isExaminated == false &&
                   myDate == DateFormat.yMMMd().format(_selectedDate) &&
                   (myTime == DateFormat.Hm().format(_selectedDate) ||
@@ -92,6 +93,10 @@ class HomePage extends StatelessWidget {
                 Get.find<QuizController>()
                     .getExamData(data.courseId!, data.courseName!);
               }
+              // print(data.courseId!);
+              // print(token);
+              // Get.find<QuizController>()
+              //     .getExamData(data.courseId!, data.courseName!);
             },
             child: Container(
               padding: const EdgeInsets.all(12),
@@ -275,7 +280,7 @@ class HomePage extends StatelessWidget {
   _getBGClr(int? color) {
     switch (color) {
       case 0:
-        return AppColors.kGreenColor.withOpacity(0.5);
+        return AppColors.kGreenColor.withOpacity(0.7);
       case 1:
         return AppColors.kRedColor.withOpacity(0.7);
       case 2:

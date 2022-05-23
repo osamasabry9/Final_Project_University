@@ -40,8 +40,7 @@ class _QuizListState extends State<QuizList> {
 
     Timer(const Duration(seconds: 10000000), () {
       answerController.postExamData(
-            widget.courseId!, questions!.length, QuizList.answersMap);
-      
+          widget.courseId!, questions!.length, QuizList.answersMap);
     });
   }
 
@@ -196,7 +195,7 @@ class _QuizListState extends State<QuizList> {
       case 1:
         return AppColors.kRedColor;
       case 2:
-        return AppColors.kSecondaryColor;
+        return AppColors.kSecondaryColor.withOpacity(0.7);
       default:
         return AppColors.kGrayColor;
     }
